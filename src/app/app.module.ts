@@ -1,4 +1,3 @@
-import { SetupComponent } from './pages/setup/setup.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,8 +9,15 @@ import zh from '@angular/common/locales/zh';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from "./app-routing.module"
 import { NgZorroAntdModule } from "ng-zorro-antd"
+import { NzIconModule } from 'ng-zorro-antd/icon';
+//组件导入
+import { SetupComponent } from './pages/setup/setup.component';
+import { MainComponent } from './pages/main/main.component';
+import { LeftControlComponent } from './pages/main/left-control/left-control.component';
+
 
 registerLocaleData(zh);
 
@@ -19,6 +25,8 @@ registerLocaleData(zh);
   declarations: [
 	AppComponent,
 	SetupComponent,
+	MainComponent,
+	LeftControlComponent
  ],
   imports: [
     BrowserModule,
@@ -27,6 +35,7 @@ registerLocaleData(zh);
 	BrowserAnimationsModule,
 	AppRoutingModule,
 	NgZorroAntdModule,
+	NzIconModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
