@@ -31,12 +31,12 @@ img{
 .list-wrapper{
 	width: 100%;
 	height: calc(100vh - 64px);
-	display: flex;
-	justify-content: center;
 }
 
 .add-list-btn-wrapper{
 	margin-top: 60px;
+	display: flex;
+	justify-content: center;
 }
 .new-list{
 	color: #8c9465;

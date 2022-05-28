@@ -10,34 +10,46 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from "./app-routing.module"
 import { NgZorroAntdModule } from "ng-zorro-antd"
-import { NzIconModule } from 'ng-zorro-antd/icon';
-//组件导入
-import { SetupComponent } from './pages/setup/setup.component';
-import { MainComponent } from './pages/main/main.component';
-import { LeftControlComponent } from './pages/main/left-control/left-control.component';
 
+// modules
+import { AppRoutingModule } from './app-routing.module';
+import { SetupModule } from './pages/setup/setup.module';
+import { MainModule } from './pages/main/main.module';
+
+//services
+import { ListService } from './services/list/list.service';
+import { TodoService } from './services/todo/todo.service';
+import { LocalStroageService } from './services/local-stroage.service';
 
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
 	AppComponent,
-	SetupComponent,
-	MainComponent,
-	LeftControlComponent
+	// SetupComponent,
+	// MainComponent,
+	// LeftControlComponent,
+	// ListComponent
  ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-	BrowserAnimationsModule,
-	AppRoutingModule,
-	NgZorroAntdModule,
-	NzIconModule,
+    NgZorroAntdModule,
+    AppRoutingModule,
+    SetupModule,
+    MainModule,
+    // SummaryModule,
+    // SettingModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+	providers: [
+		{ provide: NZ_I18N, useValue: zh_CN },
+		LocalStroageService,
+		ListService,
+		TodoService,
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
