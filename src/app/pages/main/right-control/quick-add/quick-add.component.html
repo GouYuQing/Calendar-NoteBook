@@ -1,0 +1,7 @@
+<input 
+	nz-input 
+	#addInput  
+	placeholder="输入待办列表" 
+	(keydown.enter)="addTodo(addInput.value); addInput.value = ''"
+	style="width: 400px;"
+>

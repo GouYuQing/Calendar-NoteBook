@@ -3,7 +3,7 @@ import { TODOS } from './../local-stroage.namespace';
 import { ListService } from './../list/list.service';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Todo } from 'src/domain/entities';
+import { RankBy, Todo } from 'src/domain/entities';
 import { LocalStroageService } from '../local-stroage.service';
 
 @Injectable({
@@ -11,7 +11,9 @@ import { LocalStroageService } from '../local-stroage.service';
 })
 export class TodoService {
 	public todo$ = new Subject<Todo[]>();
+	public rank$ = new Subject<RankBy>();
 	public todos: Todo[] = [];
+	private rank: RankBy = 'title';
 
 	constructor(
 		private listService: ListService,
@@ -20,11 +22,17 @@ export class TodoService {
 	}
 	
 	private broadCast(): void { 
-		this.todo$.next(this.todos)
+		this.todo$.next(this.todos);
+		this.rank$.next(this.rank);
 	}
 
 	private persist(): void { 
 		this.store.set(TODOS, this.todos);
+	}
+
+	public toggleRank(r: RankBy): void { 
+		this.rank = r;
+		this.rank$.next(r);
 	}
 
 	public getAll(): void { 

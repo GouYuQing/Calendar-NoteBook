@@ -29,4 +29,6 @@ export class Todo {
 	  this._id = generateUUID();
 	  this.title = title;
 	}
-  }
+}
+
+export type RankBy = 'title' | 'dueAt' | 'planAt' | 'completeFlag';
