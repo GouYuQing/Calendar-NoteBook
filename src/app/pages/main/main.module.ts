@@ -11,6 +11,7 @@ import { HeaderComponent } from './right-control/header/header.component';
 import { QuickAddComponent } from './right-control/quick-add/quick-add.component';
 import { TodoComponent } from './right-control/todo/todo.component';
 import { DetailComponent } from './detail/detail.component';
+import { SuggestComponent } from './right-control/header/suggest/suggest.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DetailComponent } from './detail/detail.component';
     HeaderComponent,
     QuickAddComponent,
     TodoComponent,
-    DetailComponent
+    DetailComponent,
+    SuggestComponent
   ],
   imports: [
 	  CommonModule,

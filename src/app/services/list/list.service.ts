@@ -10,7 +10,7 @@ type SpecialListUUID = "today" | "todo"
 })
 export class ListService {
 	private lists: List[] = [];
-	private current!: any;
+	private current: List;
 	public currentUuid: SpecialListUUID | string = "today";
 	public currentUuid$ = new Subject<string>();
 	public current$ = new Subject<List>();
@@ -53,6 +53,7 @@ export class ListService {
 	public setCurrentUuid(uuid: string): void { 
 		this.currentUuid = uuid;
 		this.current = this.lists.find(item => item._id === uuid);
+		this.broadCast()
 	}
 
 	public add(title: string): void { 
@@ -81,7 +82,6 @@ export class ListService {
 				: this.currentUuid === "today" ? "today" : "todo";
 			this.broadCast();
 			this.persist();
-
 		}
 	}
 }

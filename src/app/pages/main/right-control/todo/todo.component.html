@@ -5,7 +5,7 @@
 	[nzItemLayout]="horizontal"
 >
 	<ng-template #item let-item>
-		<nz-list-item class="todo-item" (click)="click(item._id)" (contextmenu)="contextMenu($event, todoContextRef, item._id)">
+		<nz-list-item class="todo-item" (click)="clickItem(item._id)" (contextmenu)="contextMenu($event, todoContextRef, item._id)">
 		  <nz-list-item-meta
 				[nzTitle]="nzTitle"
 				[nzDescription]="nzDescription"

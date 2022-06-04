@@ -1,11 +1,12 @@
+import { DetailComponent } from './../../detail/detail.component';
 import { takeUntil } from 'rxjs/operators';
 import { TodoService } from './../../../../services/todo/todo.service';
 import { ListService } from './../../../../services/list/list.service';
 import { List, RankBy, Todo } from 'src/domain/entities';
 import { Subject, zip } from 'rxjs';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { floorToDate, getTodayTime } from 'src/utils/time';
-import { NzDropdownContextComponent, NzDropdownService } from 'ng-zorro-antd';
+import { NzDrawerService, NzDropdownContextComponent, NzDropdownService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 const rankerGenerator = (type: RankBy = 'title'): any => {
   if (type === 'completeFlag') {
@@ -19,7 +20,7 @@ const rankerGenerator = (type: RankBy = 'title'): any => {
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
 })
-export class TodoComponent implements OnInit {
+export class TodoComponent implements OnInit, OnDestroy {
   public todos: Todo[] = [];
   public lists: List[] = [];
   public currentContextTodo: Todo;
@@ -30,7 +31,8 @@ export class TodoComponent implements OnInit {
     private listService: ListService,
     private todoService: TodoService,
     private dropdownService: NzDropdownService,
-    private router: Router
+	private router: Router,
+	private drawer: NzDrawerService,
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +53,6 @@ export class TodoComponent implements OnInit {
   }
 
   private processTodos(listUUID: string, todos: Todo[], rank: RankBy): void {
-    console.log(listUUID, todos);
     const filterTodos = todos
       .filter((todo) => {
         return (
@@ -103,5 +104,15 @@ export class TodoComponent implements OnInit {
 
   public close(): void {
     this.dropdown.close();
+  }
+
+	public clickItem(uuid: string): void {
+		this.router.navigateByUrl(`/main/${uuid}`);
+		this.drawer.create({
+			nzTitle: "详情信息",
+			nzContent: DetailComponent,
+			nzWidth: 400,
+			nzClosable: false,
+		})
   }
 }

@@ -33,11 +33,13 @@ export class ListComponent implements OnInit, OnDestroy {
 	  ) { }
 
 	ngOnInit(): void {
-		this.listService.lists$.pipe(takeUntil(this.destroy$))
+		this.listService.lists$
+			.pipe(takeUntil(this.destroy$))
 			.subscribe(lists => { 
 				this.lists = lists;
 			})
-		this.listService.currentUuid$.pipe(takeUntil(this.destroy$))
+		this.listService.currentUuid$
+			.pipe(takeUntil(this.destroy$))
 			.subscribe(uuid => { 
 				this.currentListUuid = uuid;
 			})
@@ -59,9 +61,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
 	public openAddListModal(): void {
 		this.addListModalVisible = true;
-		// setTimeout(() => {
-		//   this.listInput.nativeElement.focus();
-		// });
 	}
 	
 	public openRenameListModal(): void { 
@@ -69,7 +68,6 @@ export class ListComponent implements OnInit, OnDestroy {
 		setTimeout(() => { 
 			const title = this.lists.find(l => l._id === this.contextListUuid)?.title;
 			this.listRenameInput = title;
-			// this.listRenameInput.nativeElement.focus();
 		})
 	}
 
