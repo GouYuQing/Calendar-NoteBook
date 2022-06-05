@@ -1,9 +1,9 @@
 import { DetailComponent } from './../../detail/detail.component';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { TodoService } from './../../../../services/todo/todo.service';
 import { ListService } from './../../../../services/list/list.service';
 import { List, RankBy, Todo } from 'src/domain/entities';
-import { Subject, zip } from 'rxjs';
+import { combineLatest, forkJoin, Subject, zip } from 'rxjs';
 import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { floorToDate, getTodayTime } from 'src/utils/time';
 import { NzDrawerService, NzDropdownContextComponent, NzDropdownService } from 'ng-zorro-antd';
@@ -24,7 +24,7 @@ export class TodoComponent implements OnInit, OnDestroy {
   public todos: Todo[] = [];
   public lists: List[] = [];
   public currentContextTodo: Todo;
-  private destory$ = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private dropdown: NzDropdownContextComponent;
 
   constructor(
@@ -37,22 +37,29 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listService.lists$
-      .pipe(takeUntil(this.destory$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((lists) => {
         this.lists = lists;
       });
-	  zip(this.listService.currentUuid$, this.todoService.todo$,this.todoService.rank$).subscribe(res => { 
-		  this.processTodos(res[0], res[1], res[2])
-	  })
+	  combineLatest([
+		  this.listService.currentUuid$,
+		  this.todoService.todo$,
+		  this.todoService.rank$,
+		  this.todoService.completedHide$])
+		  .subscribe(res => {
+			this.processTodos(res[0], res[1], res[2], res[3])
+		})
     this.todoService.getAll();
 	this.listService.getAll();
   }
 
   ngOnDestroy(): void {
-    this.destory$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  private processTodos(listUUID: string, todos: Todo[], rank: RankBy): void {
+	private processTodos(listUUID: string, todos: Todo[], rank: RankBy, completedHide: boolean): void {
+	  console.log(listUUID, todos,rank,completedHide )
     const filterTodos = todos
       .filter((todo) => {
         return (
@@ -65,7 +72,9 @@ export class TodoComponent implements OnInit, OnDestroy {
         );
       })
       .map((item) => Object.assign({}, item))
-      .sort(rankerGenerator(rank));
+		.sort(rankerGenerator(rank))
+		.filter(todo => completedHide ? !todo.completedFlag : todo)
+	  console.log(filterTodos)
     this.todos = [].concat(filterTodos);
   }
 

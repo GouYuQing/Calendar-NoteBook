@@ -21,16 +21,13 @@ import { MainModule } from './pages/main/main.module';
 import { ListService } from './services/list/list.service';
 import { TodoService } from './services/todo/todo.service';
 import { LocalStroageService } from './services/local-stroage.service';
+import { InitGuardService } from './services/init-guard/init-guard.service';
 
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
 	AppComponent,
-	// SetupComponent,
-	// MainComponent,
-	// LeftControlComponent,
-	// ListComponent
  ],
   imports: [
     BrowserModule,
@@ -49,6 +46,7 @@ registerLocaleData(zh);
 		LocalStroageService,
 		ListService,
 		TodoService,
+		InitGuardService
 	],
   bootstrap: [AppComponent]
 })

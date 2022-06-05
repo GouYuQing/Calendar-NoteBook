@@ -23,7 +23,7 @@ export class ListComponent implements OnInit, OnDestroy {
 	public addListModalVisible: boolean = false;
 	public renameListModalVisible: boolean = false;
 	private dropdown: NzDropdownContextComponent;
-	private destroy$ = new Subject();
+	private destroy$: Subject<void> = new Subject();
 
 	constructor(
 		private dropdownService: NzDropdownService,
@@ -47,7 +47,7 @@ export class ListComponent implements OnInit, OnDestroy {
 	}
 	
 	ngOnDestroy(): void {
-		this.destroy$.next(null);
+		this.destroy$.next();
 		this.destroy$.complete();
 	}
 
