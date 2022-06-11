@@ -7,7 +7,7 @@
 	text-align: center;
 }
 
-span .strikethrough {
+.strikethrough {
 	text-decoration: line-through;
 	color: #999999;
 }

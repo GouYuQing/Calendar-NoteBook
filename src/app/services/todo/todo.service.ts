@@ -71,6 +71,7 @@ export class TodoService {
 
 	public toggleTodoComplete(uuid: string): void {
 		const todo = this.getByUUID(uuid);
+		console.log(todo)
 		if (todo) {
 		  todo.completedFlag = !todo.completedFlag;
 		  todo.completedAt = todo.completedFlag ? getCurrentTime() : undefined;

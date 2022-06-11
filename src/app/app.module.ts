@@ -22,6 +22,8 @@ import { ListService } from './services/list/list.service';
 import { TodoService } from './services/todo/todo.service';
 import { LocalStroageService } from './services/local-stroage.service';
 import { InitGuardService } from './services/init-guard/init-guard.service';
+import { SummaryModule } from './pages/summary/summary.module';
+import { SettingModule } from './pages/setting/setting.module';
 
 registerLocaleData(zh);
 
@@ -38,8 +40,8 @@ registerLocaleData(zh);
     AppRoutingModule,
     SetupModule,
     MainModule,
-    // SummaryModule,
-    // SettingModule
+    SummaryModule,
+    SettingModule,
   ],
 	providers: [
 		{ provide: NZ_I18N, useValue: zh_CN },

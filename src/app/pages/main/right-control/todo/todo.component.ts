@@ -59,7 +59,6 @@ export class TodoComponent implements OnInit, OnDestroy {
   }
 
 	private processTodos(listUUID: string, todos: Todo[], rank: RankBy, completedHide: boolean): void {
-	  console.log(listUUID, todos,rank,completedHide )
     const filterTodos = todos
       .filter((todo) => {
         return (
@@ -74,7 +73,6 @@ export class TodoComponent implements OnInit, OnDestroy {
       .map((item) => Object.assign({}, item))
 		.sort(rankerGenerator(rank))
 		.filter(todo => completedHide ? !todo.completedFlag : todo)
-	  console.log(filterTodos)
     this.todos = [].concat(filterTodos);
   }
 
@@ -95,7 +93,7 @@ export class TodoComponent implements OnInit, OnDestroy {
     return this.lists.filter((l) => l._id !== listUUID);
   }
 
-  public toggle(uuid: string): void {
+	public handleToggle(uuid: string): void {
     this.todoService.toggleTodoComplete(uuid);
   }
 

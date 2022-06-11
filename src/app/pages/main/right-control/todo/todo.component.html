@@ -14,11 +14,12 @@
 				<label 
 					nz-checkbox
 					(click)="$event.stopPropagation()"
-					[(ngMoel)]="item.completedFlag"
-					(ngModelChange)="toggle(item._id)"
+					[(ngModel)]="item.completedFlag"
+					(ngModelChange)="handleToggle(item._id)"
 					>
 				</label>
-				<span [class.strikethrough]="item.completedFlag">{{ item.title }}</span>
+				<span *ngIf="!item.completedFlag">{{ item.title }}</span>
+				<span class="strikethrough" *ngIf="item.completedFlag">{{ item.title }}</span>
 			</ng-template>
 			<ng-template #nzDescription>
 				<span *ngIf="item.dueAt"
